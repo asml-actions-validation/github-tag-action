@@ -1,4 +1,4 @@
-name: "GitHub Actions Tag"
+name: "GitHub Actions Create Tag"
 description: "Bump and push git tag on merge"
 author: "Eric Chan"
 outputs:
