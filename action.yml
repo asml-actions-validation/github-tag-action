@@ -1,6 +1,6 @@
-name: "GitHub Tag"
+name: "GitHub Actions Tag"
 description: "Bump and push git tag on merge"
-author: "Mathieu Dutour & Eric Cjhan"
+author: "Eric Chan"
 outputs:
   new_tag:
     description: "Generated tag"
@@ -31,7 +31,7 @@ inputs:
     required: false
     default: false
   dry_run:
-    description: "Do not perform taging, just calculate next version and changelog, then exit"
+    description: "Do not perform tagging, just calculate next version and changelog, then exit"
     required: false
     default: false
 

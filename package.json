@@ -16,7 +16,7 @@
     "node",
     "setup"
   ],
-  "author": "Mathieu Dutour & Eric Chan",
+  "author": "Eric Chan",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.4",
