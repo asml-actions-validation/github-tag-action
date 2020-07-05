@@ -1,11 +1,11 @@
 name: "GitHub Tag"
 description: "Bump and push git tag on merge"
-author: "Mathieu Dutour"
+author: "Mathieu Dutour & Eric Cjhan"
 outputs:
   new_tag:
     description: "Generated tag"
-  new_version:
-    description: "Generated tag without the prefix"
+  latest_hash:
+    description: "latest commit hash"
   previous_tag:
     description: "Previous tag (or `0.0.0`)"
   changelog:
@@ -18,10 +18,10 @@ inputs:
     description: "Which type of bump to use when none explicitly provided (default: `patch`)."
     required: false
     default: "patch"
-  tag_prefix:
-    description: "A prefix to the tag name (default: `v`)."
-    required: false
-    default: "v"
+  tag:
+    description: "Tag name (default: `0.0.1`)."
+    required: true
+    default: "v0.0.1"
   release_branches:
     description: "Comma separated list of branches (bash reg exp accepted) that will generate the release tags. Other branches and pull-requests generate versions postfixed with the commit hash and do not generate any tag. Examples: `master` or `.*` or `release.*,hotfix.*,master`..."
     required: false

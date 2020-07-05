@@ -44,7 +44,7 @@ async function exec(command: string) {
 async function run() {
   try {
     const defaultBump = core.getInput("default_bump") as ReleaseType | "false";
-    const tagPrefix = core.getInput("tag_prefix");
+    const tag = core.getInput("tag") || '0.0.1';
     const releaseBranches = core.getInput("release_branches");
     const createAnnotatedTag = core.getInput("create_annotated_tag");
     const dryRun = core.getInput("dry_run");
@@ -67,37 +67,7 @@ async function run() {
 
     await exec("git fetch --tags");
 
-    const hasTag = !!(await exec("git tag")).stdout.trim();
-    let tag = "";
     let logs = "";
-
-    if (hasTag) {
-      const previousTagSha = (
-        await exec("git rev-list --tags --topo-order --max-count=1")
-      ).stdout.trim();
-      tag = (await exec(`git describe --tags ${previousTagSha}`)).stdout.trim();
-      logs = (
-        await exec(
-          `git log ${tag}..HEAD --pretty=format:'%s%n%b${HASH_SEPARATOR}%h${SEPARATOR}' --abbrev-commit`
-        )
-      ).stdout.trim();
-
-      core.debug(`Setting previous_tag to: ${tag}`);
-      core.setOutput("previous_tag", tag);
-
-      if (previousTagSha === GITHUB_SHA) {
-        core.debug("No new commits since previous tag. Skipping...");
-        return;
-      }
-    } else {
-      tag = "0.0.0";
-      logs = (
-        await exec(
-          `git log --pretty=format:'%s%n%b${HASH_SEPARATOR}%h${SEPARATOR}' --abbrev-commit`
-        )
-      ).stdout.trim();
-      core.setOutput("previous_tag", tag);
-    }
 
     // for some reason the commits start and end with a `'` on the CI so we ignore it
     const commits = logs
@@ -124,12 +94,12 @@ async function run() {
       return;
     }
 
-    const newVersion = `${inc(tag, bump || defaultBump)}${
-      preRelease ? `-${GITHUB_SHA.slice(0, 7)}` : ""
-    }`;
-    const newTag = `${tagPrefix}${newVersion}`;
+    const latestHash = (
+        await exec("git rev-parse HEAD")
+    ).stdout.trim();
+    const newTag = `${tag}.${latestHash}`;
 
-    core.setOutput("new_version", newVersion);
+    core.setOutput("latest_hash", latestHash);
     core.setOutput("new_tag", newTag);
 
     core.debug(`New tag: ${newTag}`);
@@ -143,7 +113,7 @@ async function run() {
           repositoryUrl: `https://github.com/${process.env.GITHUB_REPOSITORY}`,
         },
         lastRelease: { gitTag: tag },
-        nextRelease: { gitTag: newTag, version: newVersion },
+        nextRelease: { gitTag: newTag, latestHash },
       }
     );
 

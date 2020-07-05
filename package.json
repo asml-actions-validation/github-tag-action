@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mathieudutour/github-tag-action.git"
+    "url": "git+https://github.com/laputansoft/github-tag-action.git"
   },
   "keywords": [
     "actions",
     "node",
     "setup"
   ],
-  "author": "Mathieu Dutour",
+  "author": "Mathieu Dutour & Eric Chan",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.4",
