@@ -97,7 +97,7 @@ async function run() {
     const latestHash = (
         await exec("git rev-parse HEAD")
     ).stdout.trim();
-    const newTag = `${tag}.${latestHash}`;
+    const newTag = `${tag}.${latestHash.slice(0,6)}`;
 
     core.setOutput("latest_hash", latestHash);
     core.setOutput("new_tag", newTag);
