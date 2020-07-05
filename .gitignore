@@ -2,9 +2,6 @@ __tests__/runner/*
 
 .idea
 
-# comment out in distribution branches
-node_modules/
-
 # Rest pulled from https://github.com/github/gitignore/blob/master/Node.gitignore
 # Logs
 logs
