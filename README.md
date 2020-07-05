@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Bump version and push tag
-        uses: laputansoft/github-tag-action@v1.2
+        uses: laputansoft/github-tag-action@v4.6
         with:
           github_token: ${{ env.github-token }}
           tag: ${{ steps.package-version.outputs.version }}
